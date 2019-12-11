@@ -1,9 +1,14 @@
-package com.demo.config;
+package com.demo.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import javax.sql.DataSource;
+
 import org.springframework.context.MessageSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -33,5 +38,22 @@ public class AppConfiguration implements WebMvcConfigurer   {
 		 bundleMessageSource.setBasename("classpath:messages");
 		 bundleMessageSource.setDefaultEncoding("utf-8");
 		 return bundleMessageSource;
+	}
+	@Bean
+	public DataSource dataSource() {
+		
+		String url="jdbc:mysql://localhost:3306/testdb";
+		String username="root";
+		String password="12345678";
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setUrl(url);
+		dataSource.setUsername(username);
+		dataSource.setPassword(password);
+		return dataSource;
+	}
+	@Bean
+	public JdbcTemplate jdbcTemplate() {
+		return new JdbcTemplate(dataSource());
 	}
 }
