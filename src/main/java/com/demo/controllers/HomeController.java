@@ -24,8 +24,6 @@ public class HomeController {
 	@RequestMapping(value = "/add-user", method = RequestMethod.GET)
 	public String addUser(HttpServletRequest req, @RequestParam(name = "uid", required = true) String userid) {
 		
-
-		
 		User user = new User();
 //		TODO get user from DB
 		user.setName(userid);
